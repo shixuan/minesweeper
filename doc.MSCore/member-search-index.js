@@ -1,0 +1,1 @@
+memberSearchIndex = [{"l":"check(int, int, int)","h":"","u":"check(int,int,int)"},{"l":"getGrid()","h":"","u":""},{"l":"getGridLength()","h":"","u":""},{"l":"getMemory()","h":"","u":""},{"l":"MSCore()","h":"","u":"%3Cinit%3E()"},{"l":"startGame()","h":"","u":""}]
