@@ -1,7 +1,7 @@
 import java.util.*;
 
 /**
-* Title: MineSweeper.java
+* Title: MSCore.java
 * Description: The core of game "Minesweeper".
 * @author Shi Xuan
 * @version 1.0
@@ -63,6 +63,7 @@ public class MSCore {
 	* Check the user's choice.
 	* @param i Ordinate of the chessboard.
 	* @param j Abscissa of the chessboard.
+	* @param blankNum the number of rest blank. if blankNum = mineNum+1, user wins.
 	* @return 0 means the game should continue. 1 means user wins. 2 means user loses;
 	*/
 	public int check(int i, int j, int blankNum) {
