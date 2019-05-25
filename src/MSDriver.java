@@ -9,7 +9,7 @@ public class MSDriver {
     public static void main(String[] args) {
         InitialGUI frame = new InitialGUI();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(540,600);
+        frame.setSize(540,400);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);

@@ -11,13 +11,15 @@ import java.util.*;
  * @version 1.0
  * @version 1.1
  * Add face icon.
+ * @version 1.2
+ * Change game gui and finish gui.
  */
 public class MSGUI extends JFrame implements ActionListener {
     private int[][] grid; // the matrix to store the values of each box. Values are same to MSCore.java
     private int gridLength; // edge length. same to MSCore.java
     private int[][] memory; // the matrix to store whether the box has been checked. same to MSCore.java
-    private Map<JButton, Integer> buttonToInt = new HashMap<>(); // a map of an integer to a button.
-    private Map<Integer, JButton> intToButton = new HashMap<>(); // a map of a button to an integer.
+    private Map<GameButton, Integer> buttonToInt = new HashMap<>(); // a map of an integer to a button.
+    private Map<Integer, GameButton> intToButton = new HashMap<>(); // a map of a button to an integer.
     private MSCore ms; // the core object
     private ArrayList<String> blank = new ArrayList<String>(); // an arraylist to store the blank which has not been checked.
     
@@ -38,17 +40,19 @@ public class MSGUI extends JFrame implements ActionListener {
         this.grid = ms.getGrid();
         this.gridLength = ms.getGridLength();
         this.memory = ms.getMemory();
+
+        count = 0;
     }
 
     /**
      * Initialize the game board
      */
     public void initGameboard() {
-        Container content = this.getContentPane();
+        Container content = getContentPane();
         content.setLayout(new BorderLayout());
 
-        int width = (int)this.getSize().getWidth();
-        int height = (int)this.getSize().getHeight();
+        int width = (int)getSize().getWidth();
+        int height = (int)getSize().getHeight();
         JPanel gameBoard = new JPanel();
         JPanel faceBoard = new JPanel();
         faceBoard.setPreferredSize(new Dimension(width, 60));
@@ -56,8 +60,9 @@ public class MSGUI extends JFrame implements ActionListener {
         content.add(gameBoard, BorderLayout.CENTER);
 
         /* Create the face icon */
-        JButton face = new JButton();
+        GameButton face = new GameButton();
         face.setPreferredSize(new Dimension(50, 50));
+        face.setBackground(new Color(238, 238, 238));
         face.addActionListener(new ActionListener(){
         
             @Override
@@ -77,7 +82,7 @@ public class MSGUI extends JFrame implements ActionListener {
         /* Create game board */
         gameBoard.setLayout(new GridLayout(gridLength, gridLength));
         for(int i = 0; i < gridLength * gridLength; i++) {
-            JButton button = new JButton();
+            GameButton button = new GameButton();
             blank.add(i + "");
             buttonToInt.put(button, i);
             intToButton.put(i, button);
@@ -90,7 +95,7 @@ public class MSGUI extends JFrame implements ActionListener {
      * The method for listening the button.
      */
     public void actionPerformed(ActionEvent event) {
-        JButton button = (JButton)(event).getSource();
+        GameButton button = (GameButton)(event).getSource();
         int i = buttonToInt.get(button) / gridLength;
         int j = buttonToInt.get(button) % gridLength;
         int end = ms.check(i, j, blank.size()); // check the game is over or not.
@@ -142,7 +147,7 @@ public class MSGUI extends JFrame implements ActionListener {
      */
     public void finishGame(int win) {
         JDialog pop = new JDialog(this, "Oops!");
-        pop.pack();
+        pop.setSize(200,130);;
         pop.setVisible(true);
         pop.setLocationRelativeTo(null);
         pop.setResizable(false);
@@ -154,11 +159,43 @@ public class MSGUI extends JFrame implements ActionListener {
             msg.setText("You Lose!");
         else {
             msg.setText("You little bastard cheated!!!");
-            pop.setTitle("Shit");
+            pop.setTitle("Damn");
         }
         msg.setHorizontalAlignment(JLabel.CENTER);
         msg.setVerticalAlignment(JLabel.CENTER);
+
+        JButton again = new JButton("Again");
+        again.addActionListener(new ActionListener(){
+        
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                InitialGUI frame = new InitialGUI();
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setSize(540,600);
+                frame.setResizable(false);
+                frame.setLocationRelativeTo(null);
+                frame.setVisible(true);
+            }
+        });
+
+        JButton quit = new JButton("Quit");
+        quit.addActionListener(new ActionListener(){
+        
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+
+        JPanel btns = new JPanel();
+        btns.add(again);
+        btns.add(quit);
+        content.setLayout(new GridLayout(2, 1));
         content.add(msg);
+        content.add(btns);
+        
+        count = 999;
 
         showChessboard();
     }
@@ -167,8 +204,9 @@ public class MSGUI extends JFrame implements ActionListener {
      * The method for showing all bombs.
      */
     public void showChessboard() {
+        GameButton button;
         for(int i = 0; i < gridLength * gridLength; i++) {
-            JButton button = intToButton.get(i);
+            button = intToButton.get(i);
             button.setEnabled(false);
             if(grid[buttonToInt.get(button) / gridLength][buttonToInt.get(button) % gridLength] == -1)
                 button.setIcon(new ImageIcon(bombImg));

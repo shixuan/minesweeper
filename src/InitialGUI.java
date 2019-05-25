@@ -38,11 +38,21 @@ public class InitialGUI extends JFrame implements ActionListener{
         hard.addActionListener(this);
         hard.setActionCommand("Hard");
 
-        JPanel choice = new JPanel();
-        choice.add(easy);
-        choice.add(normal);
-        choice.add(hard);
-        content.add(choice);
+        JPanel btns = new JPanel();
+        btns.setLayout(new GridLayout(5, 1, 0, 10));
+        btns.add(new JLabel(""));
+        btns.add(easy);
+        btns.add(normal);
+        btns.add(hard);
+        btns.add(new JLabel(""));
+        JPanel bottom = new JPanel();
+        bottom.setLayout(new GridLayout(1, 5, 10, 0));
+        bottom.add(new JLabel(""));
+        bottom.add(new JLabel(""));
+        bottom.add(btns);
+        bottom.add(new JLabel(""));
+        bottom.add(new JLabel(""));
+        content.add(bottom); 
     }
 
     /**
@@ -58,7 +68,7 @@ public class InitialGUI extends JFrame implements ActionListener{
             gridLength = 5;
             mineNum = 3;
             width = 250;
-            height = 310;
+            height = 320;
         }
         else if(event.getActionCommand().equals("Normal")) {
             gridLength = 9;
