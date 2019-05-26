@@ -15,7 +15,7 @@ public class GameButton extends JButton {
      */
     public GameButton() {
         super();
-        setBackground(new Color(243, 197, 197));
+        setBackground(new Color(154, 168, 240));
     }
 
     /**

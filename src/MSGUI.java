@@ -14,21 +14,23 @@ import java.util.*;
  * @version 1.2
  * Change game gui and finish gui.
  */
-public class MSGUI extends JFrame implements ActionListener {
+public class MSGUI extends JFrame implements ActionListener, MouseListener{
     private int[][] grid; // the matrix to store the values of each box. Values are same to MSCore.java
     private int gridLength; // edge length. same to MSCore.java
     private int[][] memory; // the matrix to store whether the box has been checked. same to MSCore.java
     private Map<GameButton, Integer> buttonToInt = new HashMap<>(); // a map of an integer to a button.
     private Map<Integer, GameButton> intToButton = new HashMap<>(); // a map of a button to an integer.
     private MSCore ms; // the core object
-    private ArrayList<String> blank = new ArrayList<String>(); // an arraylist to store the blank which has not been checked.
-    
-    static int count = 0;
+    //private ArrayList<String> blank = new ArrayList<String>(); // an arraylist to store the blank which has not been checked.
+    private int faceBtnClicked = 0;
+    private int countFlag = 0;
+
     static java.net.URL normalImg = MSGUI.class.getResource("images/normal.png");
     static java.net.URL winImg = MSGUI.class.getResource("images/win.png");
     static java.net.URL loseImg = MSGUI.class.getResource("images/lose.png");
     static java.net.URL bombImg = MSGUI.class.getResource("images/bomb.png");
     static java.net.URL cheatedImg = MSGUI.class.getResource("images/cheated.png");
+    static java.net.URL flagImg = MSGUI.class.getResource("images/flag.png");
 
     /**
      * constructor of MSGUI.
@@ -40,8 +42,6 @@ public class MSGUI extends JFrame implements ActionListener {
         this.grid = ms.getGrid();
         this.gridLength = ms.getGridLength();
         this.memory = ms.getMemory();
-
-        count = 0;
     }
 
     /**
@@ -67,8 +67,8 @@ public class MSGUI extends JFrame implements ActionListener {
         
             @Override
             public void actionPerformed(ActionEvent e) {
-                count++;
-                if(count == 6) {
+                faceBtnClicked++;
+                if(faceBtnClicked == 6) {
                     face.setIcon(new ImageIcon(cheatedImg));
                     finishGame(3);
                 }
@@ -83,10 +83,9 @@ public class MSGUI extends JFrame implements ActionListener {
         gameBoard.setLayout(new GridLayout(gridLength, gridLength));
         for(int i = 0; i < gridLength * gridLength; i++) {
             GameButton button = new GameButton();
-            blank.add(i + "");
             buttonToInt.put(button, i);
             intToButton.put(i, button);
-            button.addActionListener(this);
+            button.addMouseListener(this);
             gameBoard.add(button);
         }
     }
@@ -94,7 +93,7 @@ public class MSGUI extends JFrame implements ActionListener {
     /**
      * The method for listening the button.
      */
-    public void actionPerformed(ActionEvent event) {
+    /* public void actionPerformed(ActionEvent event) {
         GameButton button = (GameButton)(event).getSource();
         int i = buttonToInt.get(button) / gridLength;
         int j = buttonToInt.get(button) % gridLength;
@@ -109,7 +108,7 @@ public class MSGUI extends JFrame implements ActionListener {
         }
         else // the game is not over, continue.
             showBlank(i, j);
-    }
+    } */
 
     /**
      * A method for showing all the blank buttons.
@@ -120,14 +119,10 @@ public class MSGUI extends JFrame implements ActionListener {
         if(grid[i][j] != 0) {
             intToButton.get(i * gridLength + j).setText(grid[i][j]+"");
             intToButton.get(i * gridLength + j).setEnabled(false);
-            if(blank.contains((i * gridLength + j) + ""))
-                blank.remove((i * gridLength + j) + "");
             return;
         }
         else {
             intToButton.get(i * gridLength + j).setEnabled(false);
-            if(blank.contains((i * gridLength + j) + ""))
-                blank.remove((i * gridLength + j) + "");
             memory[i][j] = 1;
         }
 
@@ -172,7 +167,7 @@ public class MSGUI extends JFrame implements ActionListener {
                 dispose();
                 InitialGUI frame = new InitialGUI();
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.setSize(540,600);
+                frame.setSize(540,400);
                 frame.setResizable(false);
                 frame.setLocationRelativeTo(null);
                 frame.setVisible(true);
@@ -195,7 +190,7 @@ public class MSGUI extends JFrame implements ActionListener {
         content.add(msg);
         content.add(btns);
         
-        count = 999;
+        faceBtnClicked = 999;
 
         showChessboard();
     }
@@ -212,6 +207,58 @@ public class MSGUI extends JFrame implements ActionListener {
                 button.setIcon(new ImageIcon(bombImg));
                 //button.setText("@");
         }
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        GameButton button = (GameButton)(e).getSource();
+        int i = buttonToInt.get(button) / gridLength;
+        int j = buttonToInt.get(button) % gridLength;
+        boolean isBomb = ms.isBomb(i, j);
+
+        if(e.getButton() == MouseEvent.BUTTON1) {
+            if(isBomb) { //user loses
+                intToButton.get(-1).setIcon(new ImageIcon(loseImg));
+                finishGame(2);
+            }
+            else // the game is not over, continue.
+                showBlank(i, j);
+        }
+        else if(e.getButton() == MouseEvent.BUTTON3) {
+            button.setIcon(new ImageIcon(flagImg));
+            button.setEnabled(false);
+            if(isBomb) countFlag++;
+
+            if(!ms.isOver(countFlag)) { //user wins
+                intToButton.get(-1).setIcon(new ImageIcon(winImg));
+                finishGame(1);
+            }
+        }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
     }
 
 }
