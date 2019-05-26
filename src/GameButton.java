@@ -15,7 +15,7 @@ public class GameButton extends JButton {
      */
     public GameButton() {
         super();
-        setBackground(new Color(243, 197, 197));
+        setBackground(new Color(190, 190, 190));
     }
 
     /**
@@ -28,7 +28,7 @@ public class GameButton extends JButton {
             if(!enabled)
                 setBackground(new Color(238, 238, 238));
             else
-                setBackground(new Color(243, 197, 197));
+                setBackground(new Color(190, 190, 190));
 
             repaint();
         }

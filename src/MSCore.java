@@ -87,15 +87,23 @@ public class MSCore {
 	* Check the user's choice.
 	* @param i Ordinate of the chessboard.
 	* @param j Abscissa of the chessboard.
-	* @param blankNum the number of rest blank. if blankNum = mineNum+1, user wins.
-	* @return 0 means the game should continue. 1 means user wins. 2 means user loses;
+	* @return whether there is a bomb.
 	*/
-	public int check(int i, int j, int blankNum) {
+	public boolean isBomb(int i, int j) {
 		if(grid[i][j] == -1)
-			return 2;
-		else if(blankNum == mineNum + 1)
-			return 1;
+			return true;
 		else
-			return 0;
+			return false;
+	}
+
+	/**
+	 * @param flagNum
+	 * @return user wins or loses.
+	 */
+	public boolean isOver(int flagNum) {
+		if(flagNum == mineNum)
+			return false;
+		else
+			return true;
 	}
 }
