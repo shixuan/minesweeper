@@ -5,7 +5,7 @@ import java.awt.event.*;
 import java.util.*;
 
 /**
- * Title: MSGUI.java
+ * Title: MSGui.java
  * Description: The gui of game "Minesweeper".
  * @author Shi Xuan
  * @version 1.0
@@ -14,7 +14,7 @@ import java.util.*;
  * @version 1.2
  * Change game gui and finish gui.
  */
-public class MSGUI extends JFrame implements ActionListener, MouseListener{
+public class MSGui extends JFrame implements ActionListener, MouseListener{
     private int[][] grid; // the matrix to store the values of each box. Values are same to MSCore.java
     private int gridLength; // edge length. same to MSCore.java
     private int[][] memory; // the matrix to store whether the box has been checked. same to MSCore.java
@@ -25,18 +25,18 @@ public class MSGUI extends JFrame implements ActionListener, MouseListener{
     private int faceBtnClicked = 0;
     private int countFlag = 0;
 
-    static java.net.URL normalImg = MSGUI.class.getResource("images/normal.png");
-    static java.net.URL winImg = MSGUI.class.getResource("images/win.png");
-    static java.net.URL loseImg = MSGUI.class.getResource("images/lose.png");
-    static java.net.URL bombImg = MSGUI.class.getResource("images/bomb.png");
-    static java.net.URL cheatedImg = MSGUI.class.getResource("images/cheated.png");
-    static java.net.URL flagImg = MSGUI.class.getResource("images/flag.png");
+    static java.net.URL normalImg = MSGui.class.getResource("images/normal.png");
+    static java.net.URL winImg = MSGui.class.getResource("images/win.png");
+    static java.net.URL loseImg = MSGui.class.getResource("images/lose.png");
+    static java.net.URL bombImg = MSGui.class.getResource("images/bomb.png");
+    static java.net.URL cheatedImg = MSGui.class.getResource("images/cheated.png");
+    static java.net.URL flagImg = MSGui.class.getResource("images/flag.png");
 
     /**
-     * constructor of MSGUI.
+     * constructor of MSGui.
      * @param ms the core object.
      */
-    public MSGUI(MSCore ms) {
+    public MSGui(MSCore ms) {
         this.setTitle("MineSweeper");
         this.ms = ms;
         this.grid = ms.getGrid();
@@ -165,7 +165,7 @@ public class MSGUI extends JFrame implements ActionListener, MouseListener{
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                InitialGUI frame = new InitialGUI();
+                InitialGui frame = new InitialGui();
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.setSize(540,400);
                 frame.setResizable(false);

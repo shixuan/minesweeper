@@ -4,16 +4,16 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 /**
- * Title: InitialGUI.java
+ * Title: InitialGui.java
  * Description: The primaty gui of game "Minesweeper".
  * @author Shi Xuan
  * @version 1.0
  */
-public class InitialGUI extends JFrame implements ActionListener{
+public class InitialGui extends JFrame implements ActionListener{
     /**
-     * Constructor of InitialGUI
+     * Constructor of InitialGui
      */
-    public InitialGUI() {
+    public InitialGui() {
         Container content = this.getContentPane();
         content.setLayout(new GridLayout(2, 1));
 
@@ -84,7 +84,7 @@ public class InitialGUI extends JFrame implements ActionListener{
         }
         MSCore m = new MSCore(gridLength, mineNum);
         m.startGame();
-        MSGUI frame = new MSGUI(m);
+        MSGui frame = new MSGui(m);
         frame.setSize(width, height);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
