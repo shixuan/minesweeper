@@ -22,9 +22,9 @@ public class InitialGui extends JFrame implements ActionListener{
         content.add(title);
 
         /* choice buttons*/
-        JButton easy = new JButton("Easy");
-        JButton normal = new JButton("Normal");
-        JButton hard = new JButton("Hard");
+        Button easy = new Button("Easy");
+        Button normal = new Button("Normal");
+        Button hard = new Button("Hard");
         Dimension choiceSize = new Dimension(80, 30);
         easy.setPreferredSize(choiceSize);
         easy.addActionListener(this);
@@ -67,8 +67,8 @@ public class InitialGui extends JFrame implements ActionListener{
         if(event.getActionCommand().equals("Easy")) {
             gridLength = 5;
             mineNum = 3;
-            width = 250;
-            height = 320;
+            width = 300;
+            height = 390;
         }
         else if(event.getActionCommand().equals("Normal")) {
             gridLength = 9;
@@ -78,7 +78,7 @@ public class InitialGui extends JFrame implements ActionListener{
         }
         else if(event.getActionCommand().equals("Hard")) {
             gridLength = 10;
-            mineNum = 20;
+            mineNum = 15;
             width = 500;
             height = 560;
         }

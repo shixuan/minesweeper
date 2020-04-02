@@ -1,4 +1,6 @@
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Shape;
 
 import javax.swing.JButton;
 
@@ -9,15 +11,18 @@ import javax.swing.JButton;
  * @version 1.0
  */
 public class GameButton extends JButton {
+	private Shape shape = null;
+	private Color color;
 
     /**
      * Constructor
      */
     public GameButton() {
         super();
-        setBackground(new Color(190, 190, 190));
+        color = new Color(200, 200, 200);
+        this.setBackground(color);
     }
-
+    
     /**
      * Override setEnabled.
      */
