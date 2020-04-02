@@ -20,6 +20,7 @@ public class MSGui extends JFrame implements ActionListener, MouseListener{
     private int[][] memory; // the matrix to store whether the box has been checked. same to MSCore.java
     private Map<GameButton, Integer> buttonToInt = new HashMap<>(); // a map of an integer to a button.
     private Map<Integer, GameButton> intToButton = new HashMap<>(); // a map of a button to an integer.
+    private Button face;
     private MSCore ms; // the core object
     //private ArrayList<String> blank = new ArrayList<String>(); // an arraylist to store the blank which has not been checked.
     private int faceBtnClicked = 0;
@@ -60,7 +61,7 @@ public class MSGui extends JFrame implements ActionListener, MouseListener{
         content.add(gameBoard, BorderLayout.CENTER);
 
         /* Create the face icon */
-        GameButton face = new GameButton();
+        face = new Button("");
         face.setPreferredSize(new Dimension(50, 50));
         face.setBackground(new Color(238, 238, 238));
         face.addActionListener(new ActionListener(){
@@ -76,8 +77,6 @@ public class MSGui extends JFrame implements ActionListener, MouseListener{
         });
         face.setIcon(new ImageIcon(normalImg));
         faceBoard.add(face);
-        buttonToInt.put(face, -1);
-        intToButton.put(-1, face);
 
         /* Create game board */
         gameBoard.setLayout(new GridLayout(gridLength, gridLength));
@@ -159,7 +158,7 @@ public class MSGui extends JFrame implements ActionListener, MouseListener{
         msg.setHorizontalAlignment(JLabel.CENTER);
         msg.setVerticalAlignment(JLabel.CENTER);
 
-        JButton again = new JButton("Again");
+        Button again = new Button("Again");
         again.addActionListener(new ActionListener(){
         
             @Override
@@ -174,7 +173,7 @@ public class MSGui extends JFrame implements ActionListener, MouseListener{
             }
         });
 
-        JButton quit = new JButton("Quit");
+        Button quit = new Button("Quit");
         quit.addActionListener(new ActionListener(){
         
             @Override
@@ -218,7 +217,7 @@ public class MSGui extends JFrame implements ActionListener, MouseListener{
 
         if(e.getButton() == MouseEvent.BUTTON1) {
             if(isBomb) { //user loses
-                intToButton.get(-1).setIcon(new ImageIcon(loseImg));
+                face.setIcon(new ImageIcon(loseImg));
                 finishGame(2);
             }
             else // the game is not over, continue.
@@ -230,7 +229,7 @@ public class MSGui extends JFrame implements ActionListener, MouseListener{
             if(isBomb) countFlag++;
 
             if(!ms.isOver(countFlag)) { //user wins
-                intToButton.get(-1).setIcon(new ImageIcon(winImg));
+                face.setIcon(new ImageIcon(winImg));
                 finishGame(1);
             }
         }
