@@ -23,8 +23,11 @@ public class MSGui extends JFrame implements ActionListener, MouseListener{
     private Button face;
     private MSCore ms; // the core object
     //private ArrayList<String> blank = new ArrayList<String>(); // an arraylist to store the blank which has not been checked.
-    private int faceBtnClicked = 0;
-    private int countFlag = 0;
+    private int faceBtnClicked;
+    private int countFlag;
+    private int countBomb;
+    
+    private JLabel countPane;
 
     static java.net.URL normalImg = MSGui.class.getResource("images/normal.png");
     static java.net.URL winImg = MSGui.class.getResource("images/win.png");
@@ -43,17 +46,19 @@ public class MSGui extends JFrame implements ActionListener, MouseListener{
         this.grid = ms.getGrid();
         this.gridLength = ms.getGridLength();
         this.memory = ms.getMemory();
+        
+        this.faceBtnClicked = 0;
+        this.countFlag = 0;
+        this.countBomb = 0;
     }
 
     /**
      * Initialize the game board
      */
-    public void initGameboard() {
+    public void initGameboard(int width) {
         Container content = getContentPane();
         content.setLayout(new BorderLayout());
 
-        int width = (int)getSize().getWidth();
-        int height = (int)getSize().getHeight();
         JPanel gameBoard = new JPanel();
         JPanel faceBoard = new JPanel();
         faceBoard.setPreferredSize(new Dimension(width, 60));
@@ -76,7 +81,13 @@ public class MSGui extends JFrame implements ActionListener, MouseListener{
             }
         });
         face.setIcon(new ImageIcon(normalImg));
+        faceBoard.setLayout(null);
+        face.setBounds(width/2-width*3/50, 5, 50, 50);
         faceBoard.add(face);
+        countPane = new JLabel("x"+(ms.getMineNum()-countFlag), JLabel.CENTER);
+        countPane.setFont(new Font("Microsoft Yahei", Font.BOLD, 15));
+        countPane.setBounds(width*4/5, 5, 50, 50);
+        faceBoard.add(countPane);
 
         /* Create game board */
         gameBoard.setLayout(new GridLayout(gridLength, gridLength));
@@ -116,11 +127,13 @@ public class MSGui extends JFrame implements ActionListener, MouseListener{
      */
     public void showBlank(int i, int j) {
         if(grid[i][j] != 0) {
+        	intToButton.get(i * gridLength + j).setIcon(null);
             intToButton.get(i * gridLength + j).setText(grid[i][j]+"");
             intToButton.get(i * gridLength + j).setEnabled(false);
             return;
         }
         else {
+        	intToButton.get(i * gridLength + j).setIcon(null);
             intToButton.get(i * gridLength + j).setEnabled(false);
             memory[i][j] = 1;
         }
@@ -224,14 +237,28 @@ public class MSGui extends JFrame implements ActionListener, MouseListener{
                 showBlank(i, j);
         }
         else if(e.getButton() == MouseEvent.BUTTON3) {
-            button.setIcon(new ImageIcon(flagImg));
-            button.setEnabled(false);
-            if(isBomb) countFlag++;
-
-            if(!ms.isOver(countFlag)) { //user wins
-                face.setIcon(new ImageIcon(winImg));
-                finishGame(1);
-            }
+        	
+        	if(!button.getFlag() && countFlag < ms.getMineNum()) {
+        		button.setIcon(new ImageIcon(flagImg));
+        		button.changeFlag();
+        		countFlag++;
+        		
+        		if(ms.isBomb(i, j))
+        			countBomb++;
+        		if(ms.isWin(countBomb)) {
+                	face.setIcon(new ImageIcon(winImg));
+                    finishGame(1);
+                }
+        		
+        	}
+        	else if(button.getFlag()) {
+        		button.setIcon(null);
+        		button.changeFlag();
+        		countFlag--;
+        	}
+        	countPane.setText("x"+(ms.getMineNum()-countFlag));
+            //button.setEnabled(false);
+            
         }
     }
 
