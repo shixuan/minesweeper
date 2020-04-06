@@ -7,12 +7,12 @@ import javax.swing.JButton;
 /**
  * Title: GameButton.java
  * Description: Class of game buttons
- * @author Shi Xuan
- * @version 1.0
+ * @author Xuan Shi
  */
 public class GameButton extends JButton {
 	private Shape shape = null;
 	private Color color;
+	private boolean flag;
 
     /**
      * Constructor
@@ -21,6 +21,7 @@ public class GameButton extends JButton {
         super();
         color = new Color(200, 200, 200);
         this.setBackground(color);
+        this.flag = false;
     }
     
     /**
@@ -37,5 +38,14 @@ public class GameButton extends JButton {
 
             repaint();
         }
+    }
+    
+    public boolean getFlag() {return this.flag;}
+    
+    public void changeFlag() {
+    	if(flag)
+    		flag = false;
+    	else
+    		flag = true;
     }
 }

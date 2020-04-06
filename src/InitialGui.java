@@ -6,8 +6,7 @@ import javax.swing.*;
 /**
  * Title: InitialGui.java
  * Description: The primaty gui of game "Minesweeper".
- * @author Shi Xuan
- * @version 1.0
+ * @author Xuan Shi
  */
 public class InitialGui extends JFrame implements ActionListener{
     /**
@@ -89,8 +88,8 @@ public class InitialGui extends JFrame implements ActionListener{
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.initGameboard();
+        frame.initGameboard(width);
         frame.setVisible(true);
-        this.setVisible(false);
+        dispose();
     }
 }

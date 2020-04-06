@@ -10,7 +10,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-
+/**
+ * Special button style
+ * @author Xuan Shi
+ *
+ */
 public class Button extends JButton  {
 	 private Shape shape = null;
 	 private Color color;

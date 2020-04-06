@@ -3,8 +3,7 @@ import java.util.*;
 /**
 * Title: MSCore.java
 * Description: The core of game "Minesweeper".
-* @author Shi Xuan
-* @version 1.0
+* @author Xuan Shi
 */
 public class MSCore {
 	private int gridLength; // edge length
@@ -51,6 +50,8 @@ public class MSCore {
 	public int[][] getMemory() {
 		return this.memory;
 	}
+	
+	public int getMineNum() {return this.mineNum;}
 
 	/** Build the chessboard, generate mines randomly
 	* and calculate the values of each box.
@@ -100,10 +101,10 @@ public class MSCore {
 	 * @param flagNum
 	 * @return user wins or loses.
 	 */
-	public boolean isOver(int flagNum) {
-		if(flagNum == mineNum)
-			return false;
-		else
+	public boolean isWin(int findNum) {
+		if(findNum == mineNum)
 			return true;
+		else
+			return false;
 	}
 }

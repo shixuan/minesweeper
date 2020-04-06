@@ -2,8 +2,7 @@ import javax.swing.*;
 /**
  * Title: MAIN.java
  * Description: The driver of game "Minesweeper".
- * @author Shi Xuan
- * @version 1.0
+ * @author Xuan Shi
  */
 public class Main {
     public static void main(String[] args) {

@@ -1,8 +1,7 @@
-/GameButton.class
-/InitialGUI.class
-/MSCore.class
-/Main.class
-/MSGUI$1.class
-/MSGUI$2.class
-/MSGUI$3.class
-/MSGUI.class
+*.class
+*.iml
+/.idea
+/bin
+/classes
+/META-INF
+
