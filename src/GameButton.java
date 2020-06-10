@@ -7,8 +7,7 @@ import javax.swing.JButton;
 /**
  * Title: GameButton.java
  * Description: Class of game buttons
- * @author Shi Xuan
- * @version 1.0
+ * @author Xuan Shi
  */
 public class GameButton extends JButton {
 	private Shape shape = null;

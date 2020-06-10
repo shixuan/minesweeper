@@ -7,12 +7,7 @@ import java.util.*;
 /**
  * Title: MSGui.java
  * Description: The gui of game "Minesweeper".
- * @author Shi Xuan
- * @version 1.0
- * @version 1.1
- * Add face icon.
- * @version 1.2
- * Change game gui and finish gui.
+ * @author Xuan Shi
  */
 public class MSGui extends JFrame implements ActionListener, MouseListener{
     private int[][] grid; // the matrix to store the values of each box. Values are same to MSCore.java
@@ -82,7 +77,7 @@ public class MSGui extends JFrame implements ActionListener, MouseListener{
         });
         face.setIcon(new ImageIcon(normalImg));
         faceBoard.setLayout(null);
-        face.setBounds(width/2-width*3/50, 5, 50, 50);
+        face.setBounds(width/2-33, 5, 50, 50);
         faceBoard.add(face);
         countPane = new JLabel("x"+(ms.getMineNum()-countFlag), JLabel.CENTER);
         countPane.setFont(new Font("Microsoft Yahei", Font.BOLD, 15));
@@ -201,6 +196,7 @@ public class MSGui extends JFrame implements ActionListener, MouseListener{
         content.setLayout(new GridLayout(2, 1));
         content.add(msg);
         content.add(btns);
+        pop.revalidate();
         
         faceBtnClicked = 999;
 
