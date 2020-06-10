@@ -3,8 +3,7 @@ import java.util.*;
 /**
 * Title: MSCore.java
 * Description: The core of game "Minesweeper".
-* @author Shi Xuan
-* @version 1.0
+* @author Xuan Shi
 */
 public class MSCore {
 	private int gridLength; // edge length

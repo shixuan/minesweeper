@@ -6,8 +6,7 @@ import javax.swing.*;
 /**
  * Title: InitialGui.java
  * Description: The primaty gui of game "Minesweeper".
- * @author Shi Xuan
- * @version 1.0
+ * @author Xuan Shi
  */
 public class InitialGui extends JFrame implements ActionListener{
     /**
