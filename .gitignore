@@ -1,5 +1,7 @@
 *.class
-.classpath
-.project
-.settings/
-bin/
+*.iml
+/.idea
+/bin
+/classes
+/META-INF
+
