@@ -96,26 +96,6 @@ public class MSGui extends JFrame implements ActionListener, MouseListener{
     }
 
     /**
-     * The method for listening the button.
-     */
-    /* public void actionPerformed(ActionEvent event) {
-        GameButton button = (GameButton)(event).getSource();
-        int i = buttonToInt.get(button) / gridLength;
-        int j = buttonToInt.get(button) % gridLength;
-        int end = ms.check(i, j, blank.size()); // check the game is over or not.
-        if(end == 1) { //user wins
-            intToButton.get(-1).setIcon(new ImageIcon(winImg));
-            finishGame(end);
-        }
-        else if(end == 2) { //user loses
-            intToButton.get(-1).setIcon(new ImageIcon(loseImg));
-            finishGame(end);
-        }
-        else // the game is not over, continue.
-            showBlank(i, j);
-    } */
-
-    /**
      * A method for showing all the blank buttons.
      * @param i the row of the button which user click.
      * @param j the column of the button which user click.
@@ -251,6 +231,9 @@ public class MSGui extends JFrame implements ActionListener, MouseListener{
         		button.setIcon(null);
         		button.changeFlag();
         		countFlag--;
+
+                if(ms.isBomb(i, j))
+                    countBomb--;
         	}
         	countPane.setText("x"+(ms.getMineNum()-countFlag));
             //button.setEnabled(false);
