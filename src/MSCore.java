@@ -6,14 +6,14 @@ import java.util.*;
 * @author Xuan Shi
 */
 public class MSCore {
-	private int gridLength; // edge length
+	private final int gridLength; // edge length
 	private int[][] grid; 	// a matrix to store the values of each box in the chessboard
 							// -1 means there is a mine.
 	private int[][] memory; // a matrix to store whether the box has been checked.
 							// 0 means has not been checked.
 							// 1 means user chose this box before.
 							// the value bigger than 1 means user did not choose this box but this box has been checked.
-	private int mineNum; // the number of mines.
+	private final int mineNum; // the number of mines.
 
 	/**
 	 * Constructor of MSCore
@@ -36,75 +36,101 @@ public class MSCore {
 	}
 
 	/**
-	 * Getter of grid
-	 * @return grid
+	 * Set grid values
+	 * @param i	row
+	 * @param j	column
+	 * @param val	passed value
 	 */
-	public int[][] getGrid() {
-		return this.grid;
+	public void setGridElem(int i, int j, int val) {
+		assert(i < getGridLength() && j < getGridLength());
+		grid[i][j] = val;
 	}
 
 	/**
-	 * Getter of memory
-	 * @return memory
+	 * Get grid values
+	 * @param i	row
+	 * @param j	column
+	 * @return	grid value at [i, j]
 	 */
-	public int[][] getMemory() {
-		return this.memory;
+	public int getGridElem(int i, int j) {
+		assert(i < getGridLength() && j < getGridLength());
+		return grid[i][j];
 	}
-	
+
+	/**
+	 * Set Memory values
+	 * @param i	row
+	 * @param j	column
+	 * @param val	passed value
+	 */
+	public void setMemoryElem(int i, int j, int val) {
+		assert(i < getGridLength() && j < getGridLength());
+		memory[i][j] = val;
+	}
+
+	/**
+	 * Get memory values
+	 * @param i	row
+	 * @param j	column
+	 * @return	memory value at [i, j]
+	 */
+	public int getMemoryElem(int i, int j) {
+		assert(i < getGridLength() && j < getGridLength());
+		return memory[i][j];
+	}
+
+	/**
+	 * Getter of the number of mines
+	 * @return	number of mines
+	 */
 	public int getMineNum() {return this.mineNum;}
 
 	/** Build the chessboard, generate mines randomly
 	* and calculate the values of each box.
 	*/
 	public void startGame() {
-	for(int k = 0; k < mineNum; k++) {
+	for (int k = 0; k < mineNum; k++) {
 		int i = (int)(Math.random() * gridLength);
 		int j = (int)(Math.random() * gridLength);
-		if(grid[i][j] == -1) { //This block has already been a mine.
+		if (grid[i][j] == -1) { //This block has already been a mine.
 			k--;
 			continue;
 		}
 		grid[i][j] = -1;
-		if(j < gridLength - 1 && grid[i][j + 1] != -1)
+		if (j < gridLength - 1 && grid[i][j + 1] != -1)
 			grid[i][j + 1]++;
-		if(j > 0 && grid[i][j - 1] != -1)
+		if (j > 0 && grid[i][j - 1] != -1)
 			grid[i][j - 1]++;
-		if(i < gridLength - 1 && grid[i + 1][j] != -1)
+		if (i < gridLength - 1 && grid[i + 1][j] != -1)
 			grid[i + 1][j]++;
-		if(i > 0 && grid[i - 1][j] != -1)
+		if (i > 0 && grid[i - 1][j] != -1)
 			grid[i - 1][j]++;
-		if(i > 0 && j > 0 && grid[i - 1][j - 1] != -1)
+		if (i > 0 && j > 0 && grid[i - 1][j - 1] != -1)
 			grid[i - 1][j - 1]++;
-		if(i > 0 && j < gridLength - 1 && grid[i - 1][j + 1] != -1)
+		if (i > 0 && j < gridLength - 1 && grid[i - 1][j + 1] != -1)
 			grid[i - 1][j + 1]++;
-		if(i < gridLength - 1 && j > 0 && grid[i + 1][j - 1] != -1)
+		if (i < gridLength - 1 && j > 0 && grid[i + 1][j - 1] != -1)
 			grid[i + 1][j - 1]++;
-		if(i < gridLength - 1 && j < gridLength - 1 && grid[i + 1][j + 1] != -1)
+		if (i < gridLength - 1 && j < gridLength - 1 && grid[i + 1][j + 1] != -1)
 			grid[i + 1][j + 1]++;
 		}
 	}
 
 	/**
 	* Check the user's choice.
-	* @param i Ordinate of the chessboard.
-	* @param j Abscissa of the chessboard.
+	* @param i row of the chessboard.
+	* @param j colmun of the chessboard.
 	* @return whether there is a bomb.
 	*/
 	public boolean isBomb(int i, int j) {
-		if(grid[i][j] == -1)
-			return true;
-		else
-			return false;
+		return grid[i][j] == -1;
 	}
 
 	/**
-	 * @param flagNum
+	 * @param findNum	how much bombs did the user find
 	 * @return user wins or loses.
 	 */
 	public boolean isWin(int findNum) {
-		if(findNum == mineNum)
-			return true;
-		else
-			return false;
+		return findNum == mineNum;
 	}
 }
