@@ -63,19 +63,19 @@ public class InitialGui extends JFrame implements ActionListener{
         int width = 0;
         int height = 0;
 
-        if(event.getActionCommand().equals("Easy")) {
+        if (event.getActionCommand().equals("Easy")) {
             gridLength = 5;
             mineNum = 3;
             width = 300;
             height = 390;
         }
-        else if(event.getActionCommand().equals("Normal")) {
+        else if (event.getActionCommand().equals("Normal")) {
             gridLength = 9;
             mineNum = 10;
             width = 540;
             height = 600;
         }
-        else if(event.getActionCommand().equals("Hard")) {
+        else if (event.getActionCommand().equals("Hard")) {
             gridLength = 10;
             mineNum = 15;
             width = 500;
