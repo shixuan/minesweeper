@@ -127,10 +127,10 @@ public class MSCore {
 	}
 
 	/**
-	 * @param flagNum number of flag
+	 * @param findNum	how much bombs did the user find
 	 * @return user wins or loses.
 	 */
-	public boolean isWin(int flagNum) {
-		return flagNum == mineNum;
+	public boolean isWin(int findNum) {
+		return findNum == mineNum;
 	}
 }

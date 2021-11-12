@@ -217,10 +217,9 @@ public class MSGui extends JFrame implements ActionListener, MouseListener{
         		if (ms.isBomb(i, j))
         			countBomb++;
         		if (ms.isWin(countBomb)) {
-                	face.setIcon(new ImageIcon(winImg));
-                    finishGame(1);
+        		    face.setIcon(new ImageIcon(winImg));
+        		    finishGame(1);
                 }
-        		
         	}
         	else if (button.getFlag()) {
         		button.setIcon(null);
@@ -231,8 +230,6 @@ public class MSGui extends JFrame implements ActionListener, MouseListener{
                     countBomb--;
         	}
         	countPane.setText("x"+(ms.getMineNum()-countFlag));
-            //button.setEnabled(false);
-            
         }
     }
 
