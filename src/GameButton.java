@@ -10,8 +10,6 @@ import javax.swing.JButton;
  * @author Xuan Shi
  */
 public class GameButton extends JButton {
-	private Shape shape = null;
-	private Color color;
 	private boolean flag;
 
     /**
@@ -19,8 +17,7 @@ public class GameButton extends JButton {
      */
     public GameButton() {
         super();
-        color = new Color(200, 200, 200);
-        this.setBackground(color);
+        this.setBackground(new Color(200, 200, 200));
         this.flag = false;
     }
     
@@ -30,8 +27,8 @@ public class GameButton extends JButton {
     public void setEnabled(boolean enabled) {
         boolean oldEnabled = isEnabled();
         super.setEnabled(enabled);
-        if(oldEnabled != enabled) {
-            if(!enabled)
+        if (oldEnabled != enabled) {
+            if (!enabled)
                 setBackground(new Color(238, 238, 238));
             else
                 setBackground(new Color(190, 190, 190));
@@ -42,10 +39,7 @@ public class GameButton extends JButton {
     
     public boolean getFlag() {return this.flag;}
     
-    public void changeFlag() {
-    	if(flag)
-    		flag = false;
-    	else
-    		flag = true;
+    public void toggleFlag() {
+    	flag = !flag;
     }
 }

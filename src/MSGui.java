@@ -10,14 +10,11 @@ import java.util.*;
  * @author Xuan Shi
  */
 public class MSGui extends JFrame implements ActionListener, MouseListener{
-    private int[][] grid; // the matrix to store the values of each box. Values are same to MSCore.java
-    private int gridLength; // edge length. same to MSCore.java
-    private int[][] memory; // the matrix to store whether the box has been checked. same to MSCore.java
+    private final int gridLength; // edge length. same to MSCore.java
     private Map<GameButton, Integer> buttonToInt = new HashMap<>(); // a map of an integer to a button.
     private Map<Integer, GameButton> intToButton = new HashMap<>(); // a map of a button to an integer.
     private Button face;
-    private MSCore ms; // the core object
-    //private ArrayList<String> blank = new ArrayList<String>(); // an arraylist to store the blank which has not been checked.
+    private final MSCore ms; // the core object
     private int faceBtnClicked;
     private int countFlag;
     private int countBomb;
@@ -38,9 +35,7 @@ public class MSGui extends JFrame implements ActionListener, MouseListener{
     public MSGui(MSCore ms) {
         this.setTitle("MineSweeper");
         this.ms = ms;
-        this.grid = ms.getGrid();
         this.gridLength = ms.getGridLength();
-        this.memory = ms.getMemory();
         
         this.faceBtnClicked = 0;
         this.countFlag = 0;
@@ -69,7 +64,7 @@ public class MSGui extends JFrame implements ActionListener, MouseListener{
             @Override
             public void actionPerformed(ActionEvent e) {
                 faceBtnClicked++;
-                if(faceBtnClicked == 6) {
+                if (faceBtnClicked == 6) {
                     face.setIcon(new ImageIcon(cheatedImg));
                     finishGame(3);
                 }
@@ -86,7 +81,7 @@ public class MSGui extends JFrame implements ActionListener, MouseListener{
 
         /* Create game board */
         gameBoard.setLayout(new GridLayout(gridLength, gridLength));
-        for(int i = 0; i < gridLength * gridLength; i++) {
+        for (int i = 0; i < gridLength * gridLength; i++) {
             GameButton button = new GameButton();
             buttonToInt.put(button, i);
             intToButton.put(i, button);
@@ -101,25 +96,25 @@ public class MSGui extends JFrame implements ActionListener, MouseListener{
      * @param j the column of the button which user click.
      */
     public void showBlank(int i, int j) {
-        if(grid[i][j] != 0) {
+        if (ms.getGridElem(i, j) != 0) {
         	intToButton.get(i * gridLength + j).setIcon(null);
-            intToButton.get(i * gridLength + j).setText(grid[i][j]+"");
+            intToButton.get(i * gridLength + j).setText(ms.getGridElem(i, j)+"");
             intToButton.get(i * gridLength + j).setEnabled(false);
             return;
         }
         else {
         	intToButton.get(i * gridLength + j).setIcon(null);
             intToButton.get(i * gridLength + j).setEnabled(false);
-            memory[i][j] = 1;
+            ms.setMemoryElem(i, j, 1);
         }
 
-        if(i > 0 && memory[i-1][j] != 1)
+        if (i > 0 && ms.getMemoryElem(i - 1, j) != 1)
             showBlank(i - 1, j);
-        if(j > 0 && memory[i][j-1] != 1)
+        if (j > 0 && ms.getMemoryElem(i, j - 1) != 1)
             showBlank(i, j - 1);
-        if(i < gridLength - 1 && memory[i+1][j] != 1)
+        if (i < gridLength - 1 && ms.getMemoryElem(i + 1, j) != 1)
             showBlank(i + 1, j);
-        if(j < gridLength - 1 && memory[i][j+1] != 1)
+        if (j < gridLength - 1 && ms.getMemoryElem(i, j + 1) != 1)
             showBlank(i, j + 1);
     }
 
@@ -135,9 +130,9 @@ public class MSGui extends JFrame implements ActionListener, MouseListener{
         pop.setResizable(false);
         Container content = pop.getContentPane();
         JLabel msg = new JLabel();
-        if(win == 1)
+        if (win == 1)
             msg.setText("You Win!");
-        else if(win == 2)
+        else if (win == 2)
             msg.setText("You Lose!");
         else {
             msg.setText("You little bastard cheated!!!");
@@ -188,12 +183,12 @@ public class MSGui extends JFrame implements ActionListener, MouseListener{
      */
     public void showChessboard() {
         GameButton button;
-        for(int i = 0; i < gridLength * gridLength; i++) {
+        for (int i = 0; i < gridLength * gridLength; i++) {
             button = intToButton.get(i);
             button.setEnabled(false);
-            if(grid[buttonToInt.get(button) / gridLength][buttonToInt.get(button) % gridLength] == -1)
+            if (ms.getGridElem(buttonToInt.get(button) / gridLength,
+                    buttonToInt.get(button) % gridLength) == -1)
                 button.setIcon(new ImageIcon(bombImg));
-                //button.setText("@");
         }
     }
 
@@ -204,35 +199,35 @@ public class MSGui extends JFrame implements ActionListener, MouseListener{
         int j = buttonToInt.get(button) % gridLength;
         boolean isBomb = ms.isBomb(i, j);
 
-        if(e.getButton() == MouseEvent.BUTTON1) {
-            if(isBomb) { //user loses
+        if (e.getButton() == MouseEvent.BUTTON1) {
+            if (isBomb) { //user loses
                 face.setIcon(new ImageIcon(loseImg));
                 finishGame(2);
             }
             else // the game is not over, continue.
                 showBlank(i, j);
         }
-        else if(e.getButton() == MouseEvent.BUTTON3) {
+        else if (e.getButton() == MouseEvent.BUTTON3) {
         	
-        	if(!button.getFlag() && countFlag < ms.getMineNum()) {
+        	if (!button.getFlag() && countFlag < ms.getMineNum()) {
         		button.setIcon(new ImageIcon(flagImg));
-        		button.changeFlag();
+        		button.toggleFlag();
         		countFlag++;
         		
-        		if(ms.isBomb(i, j))
+        		if (ms.isBomb(i, j))
         			countBomb++;
-        		if(ms.isWin(countBomb)) {
+        		if (ms.isWin(countBomb)) {
                 	face.setIcon(new ImageIcon(winImg));
                     finishGame(1);
                 }
         		
         	}
-        	else if(button.getFlag()) {
+        	else if (button.getFlag()) {
         		button.setIcon(null);
-        		button.changeFlag();
+        		button.toggleFlag();
         		countFlag--;
 
-                if(ms.isBomb(i, j))
+                if (ms.isBomb(i, j))
                     countBomb--;
         	}
         	countPane.setText("x"+(ms.getMineNum()-countFlag));
