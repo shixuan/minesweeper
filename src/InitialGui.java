@@ -64,22 +64,22 @@ public class InitialGui extends JFrame implements ActionListener{
         int height = 0;
 
         if (event.getActionCommand().equals("Easy")) {
-            gridLength = 5;
-            mineNum = 3;
-            width = 300;
-            height = 390;
-        }
-        else if (event.getActionCommand().equals("Normal")) {
             gridLength = 9;
             mineNum = 10;
             width = 540;
             height = 600;
         }
+        else if (event.getActionCommand().equals("Normal")) {
+            gridLength = 12;
+            mineNum = 20;
+            width = 600;
+            height = 680;
+        }
         else if (event.getActionCommand().equals("Hard")) {
-            gridLength = 10;
-            mineNum = 15;
-            width = 500;
-            height = 560;
+            gridLength = 16;
+            mineNum = 30;
+            width = 700;
+            height = 760;
         }
         MSCore m = new MSCore(gridLength, mineNum);
         m.startGame();
