@@ -119,8 +119,8 @@ public class MSGui extends JFrame implements ActionListener, MouseListener{
     }
 
     /**
-     * Finish the game and show all bombs.
-     * @param win 1 means user wins. 2 means user loses. 3 means user cheats.
+     * Finish the game and show all mines.
+     * @param win 1-win. 2-lose. 3-cheat.
      */
     public void finishGame(int win) {
         JDialog pop = new JDialog(this, "Oops!");
@@ -179,7 +179,7 @@ public class MSGui extends JFrame implements ActionListener, MouseListener{
     }
 
     /**
-     * The method for showing all bombs.
+     * The method for showing all mines.
      */
     public void showChessboard() {
         GameButton button;

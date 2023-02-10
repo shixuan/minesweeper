@@ -58,7 +58,7 @@ public class MSCore {
 	}
 
 	/**
-	 * Set Memory values
+	 * Set memory values
 	 * @param i	row
 	 * @param j	column
 	 * @param val	passed value
@@ -80,8 +80,8 @@ public class MSCore {
 	}
 
 	/**
-	 * Getter of the number of mines
-	 * @return	number of mines
+	 * Get the number of mines
+	 * @return	the number of mines
 	 */
 	public int getMineNum() {return this.mineNum;}
 
@@ -117,7 +117,7 @@ public class MSCore {
 	}
 
 	/**
-	* Check the user's choice.
+	* Check current box is mine or not.
 	* @param i row of the chessboard.
 	* @param j colmun of the chessboard.
 	* @return whether there is a bomb.
@@ -127,8 +127,8 @@ public class MSCore {
 	}
 
 	/**
-	 * @param findNum	how much bombs did the user find
-	 * @return user wins or loses.
+	 * @param findNum	find how many mines
+	 * @return 	win or lose.
 	 */
 	public boolean isWin(int findNum) {
 		return findNum == mineNum;
